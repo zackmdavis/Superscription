@@ -5,6 +5,7 @@ gem 'pg'
 gem 'jquery-rails'
 gem 'bcrypt-ruby', '~> 3.0.0'
 gem 'jbuilder'
+gem 'nokogiri'
 
 group :development do
   gem 'debugger'
