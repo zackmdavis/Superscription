@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.13'
 gem 'pg'
 gem 'jquery-rails'
+gem 'devise'
 gem 'bcrypt-ruby', '~> 3.0.0'
 gem 'jbuilder'
 gem 'nokogiri'
@@ -10,6 +11,7 @@ gem 'nokogiri'
 group :development do
   gem 'debugger'
   gem 'better_errors'
+  gem 'binding_of_caller'
 end
 
 group :assets do
