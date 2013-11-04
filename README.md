@@ -1,0 +1,1 @@
+Superscription is an RSS feed aggregator (presently in development).
