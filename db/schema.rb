@@ -11,7 +11,21 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131103221905) do
+ActiveRecord::Schema.define(:version => 20131104045427) do
+
+  create_table "entries", :force => true do |t|
+    t.string   "title"
+    t.string   "author"
+    t.string   "url"
+    t.datetime "date"
+    t.text     "content"
+    t.integer  "subscription_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  add_index "entries", ["subscription_id"], :name => "index_entries_on_subscription_id"
+  add_index "entries", ["url"], :name => "index_entries_on_url"
 
   create_table "subscriptions", :force => true do |t|
     t.string   "url"
