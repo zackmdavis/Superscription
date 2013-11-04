@@ -3,13 +3,18 @@
 <head>
   <title>Superscription</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
+  <link href='http://fonts.googleapis.com/css?family=Jim+Nightshade' rel='stylesheet' type='text/css'>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <p class="notice"><%= notice %></p>
-  <p class="alert"><%= alert %></p>
-  
+  <%= render "layouts/header" %>
+  <% if flash[:notice] %>
+    <p class="notice"><%= notice %></p>
+  <% end %>
+  <% if flash[:alert] %>  
+    <p class="alert"><%= alert %></p>
+  <% end %>
 
   <%= yield %>
 

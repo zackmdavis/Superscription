@@ -2,11 +2,16 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.13'
 gem 'pg'
-gem 'jquery-rails'
+
 gem 'devise'
 gem 'bcrypt-ruby', '~> 3.0.0'
-gem 'jbuilder'
+
 gem 'nokogiri'
+
+gem 'jquery-rails'
+gem 'jbuilder'
+
+gem 'bootstrap-sass'
 
 group :development do
   gem 'debugger'

@@ -1,0 +1,17 @@
+<div class="navbar navbar-static-top navbar-inverse">
+<div class="navbar-inner">
+  <div class="pull-left">
+    <p class="superscription-brand pull-left">Superscription</p>
+    <p class="header-subtext"><em>an RSS subscription manager</em></p>
+  </div>
+
+  <ul class="nav pull-right pull-left">
+    <% if current_user %>
+      <li><%= button_to "Sign out", destroy_user_session_url, :method => :delete %></li>
+    <% else %>
+      <li><%= button_to "Sign up", new_user_registration_url, :method => :get, :class =>  "btn btn-info" %></li>
+      <li><%= button_to "Sign in", new_user_session_url, :method => :get, :class =>  "btn btn-info" %></li>
+    <% end %>
+  </ul>
+</div>
+</div>
