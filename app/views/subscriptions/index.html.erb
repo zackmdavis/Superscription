@@ -1,5 +1,5 @@
 <ul>
 <% @subscriptions.each do |subscription|  %>
-  <li><%= subscription.title %> from <em><%= link_to subscription.url, subscription.url %></em></li>
+  <li><em><%= link_to subscription.title, subscription_url(subscription.id) %></em> from <em><%= link_to subscription.url, subscription.url %></em></li>
 <% end %>
 </ul>

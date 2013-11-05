@@ -5,4 +5,11 @@ class SubscriptionsController < ApplicationController
     render :index
   end
 
+  def show
+    @subscription = Subscription.includes(:entries).find(params[:id])
+    @entries = @subscription.entries
+    @entries.sort_by!{ |entry| entry.datetime }
+    render :show
+  end
+
 end

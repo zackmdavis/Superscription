@@ -1,0 +1,8 @@
+<% @entries.each do |entry| %>
+  <h4><%= link_to entry.title, entry.url %></h4>
+  <p><%= entry.author %></p>
+  <p><%= entry.datetime %></p>
+  <div class="entry-content" data-id="<%= entry.id %>">
+    <%= entry.content.html_safe %>
+  </div>
+<% end %>
