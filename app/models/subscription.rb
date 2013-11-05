@@ -29,10 +29,17 @@ class Subscription < ActiveRecord::Base
   def load_info!
     feed = self.parsed_feed
     self.title = feed.xpath('//title').first.text
-    update_period_unit = feed.xpath('//sy:updatePeriod').text
-    update_period = feed.xpath('//sy:updateFrequency').text.to_i
-    self.update_frequency = update_period_in_seconds(update_period_unit, update_period)
-    self.last_build_date = feed.xpath('//lastBuildDate').text.to_datetime
+    # Why isn't "begin/rescue" catching the error?! TODO: read up on the RSS
+    # standard and do a proper conditional
+    begin
+      update_period_unit = feed.xpath('//sy:updatePeriod').text
+      update_period = feed.xpath('//sy:updateFrequency').text.to_i
+      self.update_frequency = update_period_in_seconds(update_period_unit, update_period)
+      self.last_build_date = feed.xpath('//lastBuildDate').text.to_datetime
+    rescue SyntaxError
+      self.update_frequency = 300
+      self.last_build_date = DateTime.now
+    end
     self.save
   end
 

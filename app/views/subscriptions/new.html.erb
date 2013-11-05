@@ -1,0 +1,11 @@
+<form action="<%= subscriptions_url %>" method="post" accept-charset="utf-8">
+  <input type="hidden"
+  			 name="authenticity_token"
+  			 value="<%= form_authenticity_token %>">
+  <h3>Create a new subscription!</h3>
+  <label for="new_subscription_url"><strong>URL<strong></label><br>
+  <p>
+    <input type="text" name="subscription[url]" value="<%= @subscription.url %>" id="new_subscription_url">
+  </p>
+  <p><input type="submit" value="Create Subscription &rarr;"></p>
+</form>

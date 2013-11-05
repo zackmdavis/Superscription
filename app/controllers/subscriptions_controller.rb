@@ -24,4 +24,23 @@ class SubscriptionsController < ApplicationController
     render :show
   end
 
+  def new
+    @subscription = Subscription.new
+    render :new
+  end
+
+  def create
+    @subscription = current_user.subscriptions.build(params[:subscription])
+    if current_user.save
+      @subscription.load_everything!
+      redirect_to user_subscriptions_url(current_user)
+    else
+      flash[:alert] = @subscription.errors.full_messages
+      render :new
+    end
+  end
+
+  def destroy
+  end
+
 end
