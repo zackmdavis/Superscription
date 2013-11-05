@@ -9,13 +9,13 @@ class Subscription < ActiveRecord::Base
   belongs_to :user
   has_many :entries
 
-  def load_entries
+  def load_entries!
     raw_feed = open(self.url)
     puts "Fetching feed ..."
     parsed_feed = Nokogiri::XML(raw_feed)
     puts "Got feed!"
     entries = []
-    entries = parsed_feed.xpath('//item').each do |item|
+    parsed_feed.xpath('//item').each do |item|
       item_attributes = {:title => item.xpath('title').text,
        :author => item.xpath('dc:creator').text,
        :url => item.xpath('link').text,
