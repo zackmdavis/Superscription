@@ -2,11 +2,11 @@ require 'open-uri'
 require 'nokogiri'
 
 class Subscription < ActiveRecord::Base
-  attr_accessible :url, :title, :user_id, :category_id
+  attr_accessible :url, :title, :update_frequency, :last_build_date
 
   validates :url, :title, :presence => true
 
-  belongs_to :user
+  has_many :subscribers, :through => :user_subscriptions, :source => :user
   has_many :entries
 
   def load_entries!

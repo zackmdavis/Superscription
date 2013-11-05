@@ -7,7 +7,7 @@ class SubscriptionsController < ApplicationController
   end
 
   def index
-    @subscriptions = Subscription.find_all_by_user_id(params[:user_id])
+    @subscriptions = current_user.subscriptions
     render :index
   end
 
