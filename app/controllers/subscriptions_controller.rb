@@ -3,7 +3,13 @@ class SubscriptionsController < ApplicationController
   before_filter :authenticate_user!
 
   def main
-    # user's main reading page --- TODO
+    @subscriptions = current_user.subscriptions
+    @entries = []
+    @subscriptions.each do |subscription|
+      @entries += subscription.entries.to_a
+    end
+    @entries.sort_by!{ |entry| entry.datetime }.reverse!
+    render :main
   end
 
   def index

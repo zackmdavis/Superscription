@@ -1,1 +1,10 @@
-<h2>Welcome to the subscriptions main page!!</h2>
+<h3>Read stuff!</h3>
+<% @entries.each do |entry| %>
+  <h4><%= link_to entry.title, entry.url %></h4>
+  <p><%= entry.author %></p>
+  <p><%= entry.datetime %></p>
+  <p>from <em><%= entry.subscription.title %></em></p>
+  <div class="entry-content" data-id="<%= entry.id %>">
+    <%= entry.content.html_safe %>
+  </div>
+<% end %>

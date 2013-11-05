@@ -1,3 +1,4 @@
+<h3>Read entries from <em><%= @subscription.title %></em></h3>
 <% @entries.each do |entry| %>
   <h4><%= link_to entry.title, entry.url %></h4>
   <p><%= entry.author %></p>
