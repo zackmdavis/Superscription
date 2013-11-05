@@ -7,7 +7,8 @@
 
   <ul class="nav pull-right pull-left">
     <% if current_user %>
-      <li><%= button_to "Sign out", destroy_user_session_url, :method => :delete %></li>
+      <li><%= button_to "Read!", read_url, :method => :get, :class => "btn btn-success" %></li>
+      <li><%= button_to "Sign out", destroy_user_session_url, :method => :delete, :class => "btn btn-info" %></li>
     <% else %>
       <li><%= button_to "Sign up", new_user_registration_url, :method => :get, :class =>  "btn btn-info" %></li>
       <li><%= button_to "Sign in", new_user_session_url, :method => :get, :class =>  "btn btn-info" %></li>
