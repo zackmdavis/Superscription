@@ -12,9 +12,9 @@ class SubscriptionsController < ApplicationController
   end
 
   def show
-    @subscription = Subscription.includes(:entries).find(params[:id])
+    @subscription = Subscription.find(params[:id])
     @entries = @subscription.entries
-    @entries.sort_by!{ |entry| entry.datetime }
+    @entries.sort_by!{ |entry| entry.datetime }.reverse!
     render :show
   end
 
