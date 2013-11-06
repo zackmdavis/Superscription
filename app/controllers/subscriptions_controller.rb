@@ -4,11 +4,15 @@ class SubscriptionsController < ApplicationController
 
   def main
     @subscriptions = current_user.subscriptions
-    @entries = []
-    @subscriptions.each do |subscription|
-      @entries += subscription.entries.to_a
+    @categories = current_user.categories
+    @category_entries = ActiveSupport::OrderedHash.new
+    @categories.each do |category|
+      @category_entries[category.name] = []
+      category.subscriptions.each do |subscription|
+        @category_entries[category.name] += subscription.entries.to_a
+      end
+      @category_entries[category.name].sort_by! { |entry| entry.datetime }.reverse!
     end
-    @entries.sort_by! { |entry| entry.datetime }.reverse!
     render :main
   end
 

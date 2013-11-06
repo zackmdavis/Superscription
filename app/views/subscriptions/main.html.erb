@@ -1,2 +1,16 @@
 <h2>Read stuff!</h2>
-<%= render "shared/collected_entries", :entries => @entries %>
+
+
+<ul class="nav nav-tabs">
+  <% @categories.each do |category| %>
+  <li><a href="#<%= category.name.downcase.gsub(" ", "_") %>" data-toggle="tab"><%= category.name %></a></li>
+  <% end %>
+</ul>
+
+<div class="tab-content">
+  <% @category_entries.each do |name, entries| %>
+    <div class="tab-pane" id="<%= name.downcase.gsub(" ", "_") %>">
+      <%= render "shared/collected_entries", :entries => entries %>
+    </div>
+  <% end %>
+</div>
