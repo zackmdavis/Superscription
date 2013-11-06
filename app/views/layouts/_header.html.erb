@@ -5,7 +5,7 @@
     <p class="header-subtext"><em>an RSS subscription manager</em></p>
   </div>
 
-  <ul class="nav pull-right pull-left">
+  <ul class="nav pull-left">
     <% if current_user %>
       <li><p class="header-subtext">logged in as <strong><%= current_user.username %></strong></p></li>
       <li><%= button_to "Read!", read_url, :method => :get, :class => "btn btn-success" %></li>
