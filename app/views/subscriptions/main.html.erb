@@ -1,6 +1,5 @@
 <h2>Read stuff!</h2>
 
-
 <ul class="nav nav-tabs">
   <% @categories.each do |category| %>
   <li><a href="#<%= category.name.downcase.gsub(" ", "_") %>" data-toggle="tab"><%= category.name %></a></li>
