@@ -27,12 +27,18 @@ class SubscriptionsController < ApplicationController
 
   def new
     @subscription = Subscription.new
+    if current_user.categories.empty?
+      current_user.categories.create(:name => "Uncategorized")
+    end
+    @categories = current_user.categories
     render :new
   end
 
   def create
-    @subscription = current_user.subscriptions.build(params[:subscription])
-    if current_user.save
+    subscription_params = params[:subscription]
+    subscription_params[:user_subscriptions_attributes][0][:user_id] = current_user.id
+    @subscription = Subscription.new(subscription_params)
+    if @subscription.save
       @subscription.load_everything!
       redirect_to user_subscriptions_url(current_user)
     else

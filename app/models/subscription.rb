@@ -2,12 +2,15 @@ require 'open-uri'
 require 'nokogiri'
 
 class Subscription < ActiveRecord::Base
-  attr_accessible :url, :title, :update_frequency, :last_build_date
+  attr_accessible :url, :title, :update_frequency, :last_build_date, :user_subscriptions_attributes
 
   validates :url, :presence => true
 
+  has_many :user_subscriptions, :inverse_of => :subscription
   has_many :subscribers, :through => :user_subscriptions, :source => :user
   has_many :entries
+
+  accepts_nested_attributes_for :user_subscriptions
 
   def parsed_feed
     @parsed_feed ||= fetch_feed

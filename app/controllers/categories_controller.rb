@@ -7,6 +7,7 @@ class CategoriesController < ApplicationController
 
   def create
     @category = Category.create(params[:category])
+    @category.user = current_user
     @entries = []
     if @category.save
       render :show
