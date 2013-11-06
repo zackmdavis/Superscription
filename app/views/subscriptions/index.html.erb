@@ -5,6 +5,7 @@
     <% if user_subscription.category %>
      in category <%= link_to user_subscription.category.name, user_category_url(user_subscription.user.id, user_subscription.category.id) %>
     <% end %>
+    &mdash; <%= link_to "Edit", "#"%>
   </li>
 <% end %>
 </ul>

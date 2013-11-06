@@ -1,0 +1,19 @@
+<!-- ISSUE! This form should actually edit user_subscription info, not that of a subscription itself -->
+<h3>Edit subscription</h3>
+<form action="<%= subscriptions_url %>" method="post" accept-charset="utf-8">
+  <input type="hidden"
+  			 name="authenticity_token"
+  			 value="<%= form_authenticity_token %>">
+  <label for="new_subscription_url"><strong>URL<strong></label><br>
+  <p>
+    <input type="text" name="subscription[url]" value="<%= @subscription.url %>" id="new_subscription_url">
+  </p>
+
+  <select name="subscription[user_subscriptions_attributes][][category_id]" id="subscription_category">
+    <% @categories.each do |category| %>
+      <option value="<%= category.id %>" <%= @subscription.category == category ? 'selected' : '' %> ><%= category.name %></option>
+    <% end %>
+  </select>
+
+  <p><input type="submit" value="Edit Subscription &rarr;"></p>
+</form>
