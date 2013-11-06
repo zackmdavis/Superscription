@@ -8,12 +8,13 @@ class SubscriptionsController < ApplicationController
     @subscriptions.each do |subscription|
       @entries += subscription.entries.to_a
     end
-    @entries.sort_by!{ |entry| entry.datetime }.reverse!
+    @entries.sort_by! { |entry| entry.datetime }.reverse!
     render :main
   end
 
   def index
-    @subscriptions = current_user.subscriptions
+    @user_subscriptions = UserSubscription.find_all_by_user_id(current_user.id)
+    @user_subscriptions.sort_by! { |user_subscription| user_subscription.title }
     render :index
   end
 

@@ -10,7 +10,6 @@ gem 'nokogiri'
 
 gem 'jquery-rails'
 gem 'jbuilder'
-
 gem 'bootstrap-sass'
 
 group :development do

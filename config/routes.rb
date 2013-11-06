@@ -8,6 +8,7 @@ Superscription::Application.routes.draw do
 
   resources :users, :only => [] do
     resources :subscriptions, :only => [:index, :new]
+    resources :categories, :only => [:show]
   end
 
   resources :subscriptions, :only => [:create, :edit, :update, :show, :destroy]

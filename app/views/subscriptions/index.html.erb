@@ -1,7 +1,11 @@
 <h3>My Subscriptions</h3>
 <ul>
-<% @subscriptions.each do |subscription|  %>
-  <li><em><%= link_to subscription.title, subscription_url(subscription.id) %></em> from <em><%= link_to subscription.url, subscription.url %></em></li>
+<% @user_subscriptions.each do |user_subscription|  %>
+  <li><em><%= link_to user_subscription.title, subscription_url(user_subscription.subscription.id) %></em>
+    <% if user_subscription.category %>
+     in category <%= link_to user_subscription.category.name, user_category_url(user_subscription.user.id, user_subscription.category.id) %>
+    <% end %>
+  </li>
 <% end %>
 </ul>
 <p><%= link_to "Create a new subscription!", new_user_subscription_url %></p>
