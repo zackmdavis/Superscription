@@ -1,14 +1,20 @@
 <div class="row">
-  <div class="col-sm-10 col-sm-offset-1">
+<div class="col-sm-10 col-sm-offset-1">
   <% entries.each do |entry| %>
     <div class="well">
     <h4><%= link_to entry.title, entry.url %></h4>
     <p><%= entry.author %></p>
     <p><%= entry.datetime %></p>
     <p>from <em><%= entry.subscription.title %></em></p>
-    <div class="entry-content" data-id="<%= entry.id %>">
-      <%= entry.content.html_safe %>
-    </div>
+    <% unless entry.content.nil? %>
+      <div class="entry-content" data-id="<%= entry.id %>">
+        <%= entry.content.html_safe %>
+      </div>
+    <% else %>
+      <div class="entry-description" data-id="<%= entry.id %>">
+        <%= entry.description.html_safe %>
+      </div>
+    <% end %>
     </div>
   <% end %>
 </div>

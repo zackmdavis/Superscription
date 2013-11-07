@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Sample Feed II</title>
+	<link>example.com</link>
+	<description>no description</description>
+	<lastBuildDate>Fri, 03 Nov 2013 08:08:51 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>http://wordpress.org/?v=3.6.1</generator>
+		<item>
+		<title>Another Sample Entry</title>
+		<link>http://example.com/1</link>
+		<pubDate>Tue, 29 Oct 2013 06:43:21 +0000</pubDate>
+		<dc:creator> </dc:creator>
+		<content:encoded><![CDATA[<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using <em>lorem ipsum</em> is that it has a more-or-less normal distribution of letters, as opposed to using 'This here is content' or 'Osama Bin Laden wanted dead or alive', making it look like readable text and there also has been many examples what has happened if someone has forgotten to change the dummy text for the final copywrite text.</p>]]></content:encoded>
+		</item>
+
+		<item>
+		<title>Sample Entry Forever</title>
+		<link>http://example.com/2</link>
+		<pubDate>Tue, 26 Oct 2013 08:25:25 +0000</pubDate>
+		<dc:creator>Jennifer Userton</dc:creator>
+		<content:encoded><![CDATA[<p>Brooklyn pop-up direct trade, kogi Shoreditch you probably haven't heard of them cornhole sriracha chillwave sustainable pickled tofu ennui Pinterest flannel. Thundercats Odd Future leggings flexitarian. VHS flexitarian fingerstache fap disrupt, semiotics slow-carb PBR&B you probably haven't heard of them roof party. Marfa Neutra cornhole craft beer, cray twee disrupt. Wayfarers actually bicycle rights, Banksy cardigan kogi fingerstache fap 8-bit pop-up hoodie. Small batch American Apparel butcher, tofu jean shorts flexitarian letterpress Brooklyn keffiyeh you probably haven't heard of them Wes Anderson. Craft beer chia YOLO tofu, paleo Neutra pug Brooklyn shabby chic asymmetrical McSweeney's.</p>]]></content:encoded>
+		</item>
+	</channel>
+</rss>

@@ -32,15 +32,17 @@ class Subscription < ActiveRecord::Base
   def load_info!
     feed = self.parsed_feed
     self.title = feed.xpath('//title').first.text
-    # Why isn't "begin/rescue" catching the error?! TODO: read up on the RSS
-    # standard and do a proper conditional
-    begin
-      update_period_unit = feed.xpath('//sy:updatePeriod').text
-      update_period = feed.xpath('//sy:updateFrequency').text.to_i
-      self.update_frequency = update_period_in_seconds(update_period_unit, update_period)
-      self.last_build_date = feed.xpath('//lastBuildDate').text.to_datetime
-    rescue SyntaxError
+    update_frequency_unit = feed.xpath('//sy:updatePeriod', "sy" => "http://purl.org/rss/1.0/modules/syndication/").text
+    update_frequency = feed.xpath('//sy:updateFrequency', "sy" => "http://purl.org/rss/1.0/modules/syndication/").text.to_i
+    if update_frequency != 0
+      self.update_frequency = update_frequency_in_seconds(update_frequency_unit, update_frequency)
+    else
       self.update_frequency = 300
+    end
+    last_build_date = feed.xpath('//lastBuildDate').text.to_datetime
+    if last_build_date
+      self.last_build_date = last_build_date
+    else
       self.last_build_date = DateTime.now
     end
     self.save
@@ -53,11 +55,11 @@ class Subscription < ActiveRecord::Base
     entries = []
     feed.xpath('//item').each do |item|
       item_attributes = {:title => item.xpath('title').text,
-       :author => item.xpath('dc:creator').text,
+       :author => item.xpath('dc:creator', "dc" => "http://purl.org/dc/elements/1.1/").text,
        :url => item.xpath('link').text,
        :datetime => item.xpath('pubDate').text.to_datetime,
        :description => item.xpath('description').text,
-       :content => item.xpath('content:encoded').text,
+       :content => item.xpath('content:encoded', "content" => "http://purl.org/rss/1.0/modules/content/").text,
        :guid => item.xpath('guid').text,
        :subscription_id => self.id}
       item_attributes.reject! { |key, value| value.is_a?(String) and value.empty? }
@@ -70,10 +72,10 @@ class Subscription < ActiveRecord::Base
     end
   end
 
-  def update_period_in_seconds(period_units, period_in_units)
+  def update_frequency_in_seconds(frequency_units, frequency_in_units)
     unit_in_seconds = { 'hourly' => 3600, 'daily' => 86400, 'weekly' => 604800,
       'monthly' => 2419200, 'yearly' => 31449600}
-    unit_in_seconds[period_units] * period_in_units
+    unit_in_seconds[frequency_units] / frequency_in_units
   end
 
 end
