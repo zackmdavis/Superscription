@@ -49,16 +49,13 @@ class Subscription < ActiveRecord::Base
       self.update_frequency = @@default_update_frequency
     end
     last_build_date = feed.xpath('//lastBuildDate').text.to_datetime
-    if last_build_date
-      self.last_build_date = last_build_date
-    else
-      self.last_build_date = DateTime.now
-    end
-    self.save
+    update_build_date(last_build_date)
   end
 
   def load_entries!
     feed = self.parsed_feed
+    last_build_date = feed.xpath('//lastBuildDate').text.to_datetime
+    update_build_date(last_build_date)
     entries = []
     feed.xpath('//item').each do |item|
       item_attributes = {:title => item.xpath('title').text,
@@ -87,6 +84,15 @@ class Subscription < ActiveRecord::Base
     unit_in_seconds = { 'hourly' => 3600, 'daily' => 86400, 'weekly' => 604800,
       'monthly' => 2419200, 'yearly' => 31449600}
     unit_in_seconds[frequency_units] / frequency_in_units
+  end
+
+  def update_build_date(last_build_date)
+    if last_build_date
+      self.last_build_date = last_build_date
+    else
+      self.last_build_date = DateTime.now
+    end
+    self.save
   end
 
   def next_update_expected_at
