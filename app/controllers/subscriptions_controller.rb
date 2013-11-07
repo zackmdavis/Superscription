@@ -64,29 +64,4 @@ class SubscriptionsController < ApplicationController
     end
   end
 
-  # TODO: this should actually refer to a UserSubscription
-  def edit
-    @subscription = Subscription.find(params[:id])
-    render :edit
-  end
-
-  # TODO: likewise
-  def update
-    @subscription = Subscription.find(params[:id])
-    if @subscription.update_attributes(params[:subscription])
-      flash[:notice] = "Updated #{@subscription.title}!"
-      render :index
-    else
-      flash[:alert] = "Could not update #{@subscription.title}!"
-      render :edit
-    end
-  end
-
-  def destroy
-    @subscription = Subscription.find(params[:id])
-    flash[:notice] = "Unsubscribed from #{@subscription.title}!"
-    @subscription.destroy
-    redirect_to user_subscriptions_url(current_user)
-  end
-
 end
