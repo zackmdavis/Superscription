@@ -47,12 +47,18 @@ class SubscriptionsController < ApplicationController
     subscription_params = params[:subscription]
     subscription_params[:user_subscriptions_attributes][0][:user_id] = current_user.id
     @subscription = Subscription.new(subscription_params)
-    @subscription.set_default_info
-    if @subscription.save
+    begin
       @subscription.load_everything!
+    rescue NoMethodError, Errno::ENOENT
+      @categories = current_user.categories
+      flash.now[:alert] = "Could not interpret feed! Are you sure you have the correct URL?"
+      render :new
+      return
+    end
+    if @subscription.save
       redirect_to user_subscriptions_url(current_user)
     else
-      flash[:alert] = @subscription.errors.full_messages.map { |message| message }.join("<p>")
+      flash.now[:alert] = @subscription.errors.full_messages.map { |message| message }.join("<p>")
       @categories = current_user.categories
       render :new
     end
