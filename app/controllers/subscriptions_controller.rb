@@ -4,6 +4,11 @@ class SubscriptionsController < ApplicationController
 
   def main
     @subscriptions = current_user.subscriptions
+    @subscriptions.each do |subscription|
+      if subscription.due_for_update?
+        subscription.load_entries!
+      end
+    end
     @categories = current_user.categories
     @category_entries = ActiveSupport::OrderedHash.new
     @categories.each do |category|
@@ -42,12 +47,13 @@ class SubscriptionsController < ApplicationController
     subscription_params = params[:subscription]
     subscription_params[:user_subscriptions_attributes][0][:user_id] = current_user.id
     @subscription = Subscription.new(subscription_params)
-    @categories = current_user.categories
+    @subscription.set_default_info
     if @subscription.save
       @subscription.load_everything!
       redirect_to user_subscriptions_url(current_user)
     else
       flash[:alert] = @subscription.errors.full_messages.map { |message| message }.join("<p>")
+      @categories = current_user.categories
       render :new
     end
   end

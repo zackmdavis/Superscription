@@ -12,6 +12,9 @@ class Subscription < ActiveRecord::Base
 
   accepts_nested_attributes_for :user_subscriptions
 
+  cattr_accessor :default_update_frequency
+  @@default_update_frequency = 600
+
   def parsed_feed
     @parsed_feed ||= fetch_feed
   end
@@ -29,6 +32,12 @@ class Subscription < ActiveRecord::Base
     load_entries!
   end
 
+  def set_default_info
+    self.title = self.url
+    self.update_frequency = @@default_update_frequency
+    self.last_build_date = DateTime.now
+  end
+
   def load_info!
     feed = self.parsed_feed
     self.title = feed.xpath('//title').first.text
@@ -37,7 +46,7 @@ class Subscription < ActiveRecord::Base
     if update_frequency != 0
       self.update_frequency = update_frequency_in_seconds(update_frequency_unit, update_frequency)
     else
-      self.update_frequency = 300
+      self.update_frequency = @@default_update_frequency
     end
     last_build_date = feed.xpath('//lastBuildDate').text.to_datetime
     if last_build_date
@@ -49,8 +58,6 @@ class Subscription < ActiveRecord::Base
   end
 
   def load_entries!
-    # TODO: only load new entries rather than wastefully reloading all of them
-    self.entries.delete_all
     feed = self.parsed_feed
     entries = []
     feed.xpath('//item').each do |item|
@@ -67,8 +74,12 @@ class Subscription < ActiveRecord::Base
       puts "Parsed attributes!"
     end
     entries.each do |entry_attributes|
-      Entry.create(entry_attributes)
-      puts "Saved item!"
+      unless Entry.exists?(:guid => entry_attributes[:guid])
+        Entry.create(entry_attributes)
+        puts "Saved item!"
+      else
+        puts "Item already exists!"
+      end
     end
   end
 
@@ -76,6 +87,14 @@ class Subscription < ActiveRecord::Base
     unit_in_seconds = { 'hourly' => 3600, 'daily' => 86400, 'weekly' => 604800,
       'monthly' => 2419200, 'yearly' => 31449600}
     unit_in_seconds[frequency_units] / frequency_in_units
+  end
+
+  def next_update_expected_at
+    self.last_build_date + self.update_frequency
+  end
+
+  def due_for_update?
+    next_update_expected_at < DateTime.now
   end
 
 end
