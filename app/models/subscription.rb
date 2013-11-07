@@ -2,9 +2,9 @@ require 'open-uri'
 require 'nokogiri'
 
 class Subscription < ActiveRecord::Base
-  attr_accessible :url, :title, :update_frequency, :last_build_date, :user_subscriptions_attributes
+  attr_accessible :url, :title, :update_frequency, :last_build_date, :last_checked_at, :user_subscriptions_attributes
 
-  validates :url, :title, :update_frequency, :last_build_date, :presence => true
+  validates :url, :title, :update_frequency, :last_checked_at, :presence => true
 
   has_many :user_subscriptions, :inverse_of => :subscription
   has_many :subscribers, :through => :user_subscriptions, :source => :user
@@ -36,6 +36,8 @@ class Subscription < ActiveRecord::Base
     self.title = self.url
     self.update_frequency = @@default_update_frequency
     self.last_build_date = DateTime.now
+    # ludicrous date ensures that due_for_update? == true
+    self.last_checked_at = 50.years.ago
   end
 
   def load_info!
@@ -48,14 +50,13 @@ class Subscription < ActiveRecord::Base
     else
       self.update_frequency = @@default_update_frequency
     end
-    last_build_date = feed.xpath('//lastBuildDate').text.to_datetime
-    update_build_date(last_build_date)
   end
 
   def load_entries!
     feed = self.parsed_feed
-    last_build_date = feed.xpath('//lastBuildDate').text.to_datetime
-    update_build_date(last_build_date)
+    self.last_build_date = feed.xpath('//lastBuildDate').text.to_datetime
+    self.last_checked_at = DateTime.now
+    self.save
     entries = []
     feed.xpath('//item').each do |item|
       item_attributes = {:title => item.xpath('title').text,
@@ -86,17 +87,8 @@ class Subscription < ActiveRecord::Base
     unit_in_seconds[frequency_units] / frequency_in_units
   end
 
-  def update_build_date(last_build_date)
-    if last_build_date
-      self.last_build_date = last_build_date
-    else
-      self.last_build_date = DateTime.now
-    end
-    self.save
-  end
-
   def next_update_expected_at
-    self.last_build_date + self.update_frequency
+    self.last_checked_at + self.update_frequency
   end
 
   def due_for_update?
