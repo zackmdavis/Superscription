@@ -42,11 +42,12 @@ class SubscriptionsController < ApplicationController
     subscription_params = params[:subscription]
     subscription_params[:user_subscriptions_attributes][0][:user_id] = current_user.id
     @subscription = Subscription.new(subscription_params)
+    @categories = current_user.categories
     if @subscription.save
       @subscription.load_everything!
       redirect_to user_subscriptions_url(current_user)
     else
-      flash[:alert] = @subscription.errors.full_messages
+      flash[:alert] = @subscription.errors.full_messages.map { |message| message }.join("<p>")
       render :new
     end
   end
