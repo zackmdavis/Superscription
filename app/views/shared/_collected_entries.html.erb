@@ -4,7 +4,7 @@
     <div class="well">
     <h4><%= link_to entry.title, entry.url %></h4>
     <p><%= entry.author.html_safe unless entry.author.nil? %></p>
-    <p><%= entry.datetime %></p>
+    <p><%= entry.datetime.to_formatted_s(:superscription_custom) %></p>
     <p>from <em><%= entry.subscription.title %></em></p>
     <% unless entry.content.nil? %>
       <div class="entry-content" data-id="<%= entry.id %>">
