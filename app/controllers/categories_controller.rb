@@ -22,7 +22,7 @@ class CategoriesController < ApplicationController
     @subscriptions = @category.subscriptions
     @entries = []
     @subscriptions.each do |subscription|
-      @entries += subscription.entries.to_a
+      @entries += subscription.entries.includes(:subscription).to_a
     end
     @entries.sort_by!{ |entry| entry.datetime }.reverse!
     render :show

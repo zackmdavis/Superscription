@@ -39,6 +39,9 @@ GEM
     bootstrap-sass (3.0.0.0)
       sass (~> 3.2)
     builder (3.0.4)
+    bullet (4.7.1)
+      activesupport
+      uniform_notifier (>= 1.4.0)
     coderay (1.1.0)
     columnize (0.3.6)
     debug_inspector (0.0.2)
@@ -125,6 +128,7 @@ GEM
     uglifier (2.3.0)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
+    uniform_notifier (1.4.0)
     warden (1.2.3)
       rack (>= 1.0)
 
@@ -136,6 +140,7 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   bootstrap-sass
+  bullet
   debugger
   devise
   jquery-rails

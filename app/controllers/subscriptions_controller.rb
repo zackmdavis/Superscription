@@ -11,10 +11,10 @@ class SubscriptionsController < ApplicationController
     end
     @categories = current_user.categories
     @category_entries = ActiveSupport::OrderedHash.new
-    @categories.each do |category|
+    @categories.includes(:subscriptions).each do |category|
       @category_entries[category.name] = []
       category.subscriptions.each do |subscription|
-        @category_entries[category.name] += subscription.entries.to_a
+        @category_entries[category.name] += subscription.entries.includes(:subscription).to_a
       end
       @category_entries[category.name].sort_by! { |entry| entry.datetime }.reverse!
     end
@@ -22,14 +22,14 @@ class SubscriptionsController < ApplicationController
   end
 
   def index
-    @user_subscriptions = UserSubscription.find_all_by_user_id(current_user.id)
+    @user_subscriptions = UserSubscription.includes(:subscription).includes(:category).includes(:user).find_all_by_user_id(current_user.id)
     @user_subscriptions.sort_by! { |user_subscription| user_subscription.title }
     render :index
   end
 
   def show
     @subscription = Subscription.find(params[:id])
-    @entries = @subscription.entries
+    @entries = @subscription.entries.includes(:subscription)
     @entries.sort_by!{ |entry| entry.datetime }.reverse!
     render :show
   end
