@@ -1,11 +1,16 @@
-<div class="navbar navbar-static-top navbar-inverse">
+<div class="navbar navbar-fixed-top navbar-inverse">
 <div class="navbar-inner">
-
+  <div class="container">
+  <div class="row">
+    <div class="col-md-3">
     <span class="superscription-site-title">
       <p class="superscription-brand">Superscription</p>
       <p class="header-subtext"><em>an RSS subscription manager</em></p>
     </span>
+    </div>
 
+    <div class="col-md-9">
+      <!-- This is unspeakably awful but seems to work: --> &nbsp;<br>
     <span class="superscription-nav-button-group">
     <% if current_user %>
       <%= button_to "Read!", read_url, :method => :get %>
@@ -24,6 +29,10 @@
         not logged in
       <% end %>
     </p>
+  </div>
+
+  </div>
+  </div>
 
 </div>
 </div>

@@ -8,11 +8,14 @@
     <input type="text" name="subscription[url]" value="<%= @subscription.url %>" id="new_subscription_url">
   </p>
 
-  <select name="subscription[user_subscriptions_attributes][][category_id]" id="subscription_category">
-    <% @categories.each do |category| %>
-      <option value="<%= category.id %>"><%= category.name %></option>
-    <% end %>
-  </select>
+ <label for="subscription_category"><strong>Category<strong></label><br>
+  <p>
+    <select name="subscription[user_subscriptions_attributes][][category_id]" id="subscription_category">
+      <% @categories.each do |category| %>
+        <option value="<%= category.id %>"><%= category.name %></option>
+      <% end %>
+    </select>
+  </p>
 
   <p><input type="submit" value="Create Subscription &rarr;"></p>
 </form>

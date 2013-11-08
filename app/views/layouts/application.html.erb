@@ -10,15 +10,21 @@
 </head>
 <body>
   <%= render "layouts/header" %>
-  <% if flash[:notice] %>
-    <p class="notice"><%= notice %></p>
-  <% end %>
-  <% if flash[:alert] %>
-    <p class="alert"><%= alert %></p>
-  <% end %>
 
-  <%= yield %>
+  <div class="container">
+    <div class="span10 offset1">
+      <% if flash[:notice] %>
+        <p class="notice"><%= notice %></p>
+      <% end %>
+      <% if flash[:alert] %>
+        <p class="alert"><%= alert %></p>
+      <% end %>
 
-  <%= render "layouts/footer" %>
+      <%= yield %>
+
+      <%= render "layouts/footer" %>
+    </div>
+  </div>
+
 </body>
 </html>
