@@ -29,6 +29,9 @@ class SubscriptionsController < ApplicationController
 
   def show
     @subscription = Subscription.find(params[:id])
+    if @subscription.due_for_update?
+      @subscription.load_entries!
+    end
     @entries = @subscription.entries.includes(:subscription)
     @entries.sort_by!{ |entry| entry.datetime }.reverse!
     render :show
