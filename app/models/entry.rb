@@ -3,6 +3,7 @@ class Entry < ActiveRecord::Base
                   :description, :content, :guid, :subscription_id
 
   validates :title, :url, :datetime, :presence => true
+  validates :description, :presence => true, :if => "content.nil?"
 
   belongs_to :subscription
 end
