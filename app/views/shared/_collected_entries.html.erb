@@ -3,7 +3,7 @@
   <% entries.each do |entry| %>
     <div class="well">
     <h4><%= link_to entry.title, entry.url %></h4>
-    <p><%= entry.author.html_safe %></p>
+    <p><%= entry.author.html_safe unless entry.author.nil? %></p>
     <p><%= entry.datetime %></p>
     <p>from <em><%= entry.subscription.title %></em></p>
     <% unless entry.content.nil? %>
