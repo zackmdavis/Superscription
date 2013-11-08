@@ -46,6 +46,28 @@ class SubscriptionsController < ApplicationController
   def create
     subscription_params = params[:subscription]
     subscription_params[:user_subscriptions_attributes][0][:user_id] = current_user.id
+
+    # If another user has already subscribed to the same feed, use that and
+    # just create a UserSubscription join model
+    puts "using already stored feed!"
+    existing_subscription = Subscription.find_by_url(params[:subscription][:url])
+    if existing_subscription
+      subscription_params[:user_subscriptions_attributes][0][:subscription_id] = existing_subscription.id
+      user_subscription = UserSubscription.new(subscription_params[:user_subscriptions_attributes][0])
+      if user_subscription.save
+        redirect_to user_subscriptions_url(current_user)
+        return
+      else
+        flash.now[:alert] = "Something went wrong! Couldn't save subscription."
+        @subscription = Subscription.new
+        @categories = current_user.categories
+        render :new
+        return
+      end
+    end
+
+    # Otherwise, create a new Subscription (which accepts_nested_attributes_for
+    # a UserSubscription)
     @subscription = Subscription.new(subscription_params)
     begin
       @subscription.load_everything!
