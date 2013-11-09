@@ -62,7 +62,8 @@ class Subscription < ActiveRecord::Base
       item_attributes = {:title => item.xpath('title').text,
        :author => item.xpath('dc:creator', "dc" => "http://purl.org/dc/elements/1.1/").text,
        :url => item.xpath('link').text,
-       :datetime => item.xpath('pubDate').text.to_datetime,
+       :datetime => item.xpath('pubDate').text.to_datetime ||
+                     item.xpath('dc:date', "dc" => "http://purl.org/dc/elements/1.1/").text.to_datetime,
        :description => item.xpath('description').text,
        :content => item.xpath('content:encoded', "content" => "http://purl.org/rss/1.0/modules/content/").text,
        :guid => item.xpath('guid').text,
