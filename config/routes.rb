@@ -17,6 +17,7 @@ Superscription::Application.routes.draw do
 
   namespace "api", :defaults => { :format => :json } do
     resources :user_subscriptions, :only => [:destroy]
+    resources :readings, :only => [:create]
   end
 
 end

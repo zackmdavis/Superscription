@@ -7,7 +7,7 @@ $(document).ready(function(){
     $(item_id).fadeOut(250);
     $.ajax({
       url: "/api/user_subscriptions/" + user_subscription_id,
-      method: "DELETE"
+      type: "DELETE"
     });
   });
 

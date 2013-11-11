@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131111215834) do
+ActiveRecord::Schema.define(:version => 20131111230019) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -44,6 +44,13 @@ ActiveRecord::Schema.define(:version => 20131111215834) do
     t.integer  "update_frequency"
     t.datetime "last_build_date"
     t.datetime "last_checked_at"
+  end
+
+  create_table "user_entry_readings", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "entry_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "user_subscriptions", :force => true do |t|

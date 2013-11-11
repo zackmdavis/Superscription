@@ -6,4 +6,5 @@ class Entry < ActiveRecord::Base
   validates :description, :presence => true, :if => "content.nil?"
 
   belongs_to :subscription
+  has_many :user_entry_readings, :dependent => :destroy
 end
