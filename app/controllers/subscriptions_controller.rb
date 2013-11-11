@@ -4,11 +4,6 @@ class SubscriptionsController < ApplicationController
 
   def main
     @subscriptions = current_user.subscriptions
-    @subscriptions.each do |subscription|
-      if subscription.due_for_update?
-        subscription.load_entries!
-      end
-    end
     @categories = current_user.categories
     @category_entries = ActiveSupport::OrderedHash.new
     @categories.includes(:subscriptions).each do |category|
@@ -29,9 +24,6 @@ class SubscriptionsController < ApplicationController
 
   def show
     @subscription = Subscription.find(params[:id])
-    if @subscription.due_for_update?
-      @subscription.load_entries!
-    end
     @entries = @subscription.entries.includes(:subscription)
     @entries.sort_by!{ |entry| entry.datetime }.reverse!
     render :show
