@@ -13,3 +13,9 @@ task :update_subscriptions => :environment do
   end
   puts "done updating subscriptions"
 end
+
+task :delete_guest_users => :environment do
+  puts "deleting guest users whose welcome has worn out ..."
+  User.where(:is_guest => true).delete_all
+  puts "done deleting guest users"
+end
