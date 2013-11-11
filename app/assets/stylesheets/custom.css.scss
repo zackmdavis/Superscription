@@ -4,7 +4,12 @@
   font-size: 350%;
   font-family: 'Jim Nightshade';
   color: #CCCCFF;
-  margin: 0px 15px -15px;
+  margin: 0px 15px -2px;
+}
+
+a:hover.superscription-brand {
+  text-decoration: none;
+  color: #CCCCFF;
 }
 
 .header-subtext {
@@ -33,9 +38,13 @@
 }
 
 .superscription-nav-button-group {
-  margin: 100px 10px 10px;
+  margin: 18px 10px 10px;
+}
+
+#read_button {
+  background-color: #6DE8A2;
 }
 
 body {
-  padding-top: 90px;
+  padding-top: 70px;
 }
