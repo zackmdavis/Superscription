@@ -11,6 +11,8 @@ Superscription::Application.routes.draw do
     resources :categories, :only => [:new, :create, :show]
   end
 
+  post :guest, :to => "guest_users#create"
+
   resources :subscriptions, :only => [:create, :show]
 
   namespace "api", :defaults => { :format => :json } do
