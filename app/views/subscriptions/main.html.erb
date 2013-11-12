@@ -1,13 +1,13 @@
 <h3>Read stuff!</h3>
 
-<ul class="nav nav-tabs">
+<ul class="nav nav-tabs" id="subscription-tabs">
   <% @categories.each do |category| %>
   <li><a href="#<%= category.name.downcase.gsub(" ", "_") %>" data-toggle="tab"><%= category.name %></a></li>
   <% end %>
 </ul>
 
 <div class="tab-content">
-  <% @category_entries.each do |name, entries| %>
+  <% @category_entries.each_with_index do |(name, entries), index| %>
     <div class="tab-pane" id="<%= name.downcase.gsub(" ", "_") %>">
       <%= render "shared/collected_entries", :entries => entries %>
     </div>
