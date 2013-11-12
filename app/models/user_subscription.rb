@@ -18,8 +18,9 @@ class UserSubscription < ActiveRecord::Base
   end
 
   def unread_entries
-    self.entries.includes(:subscription).joins("LEFT OUTER JOIN user_entry_readings ON entries.id = user_entry_readings.entry_id")
-    .where("user_entry_readings.entry_id IS NULL OR user_entry_readings.user_id != #{self.user_id}")
+    user_readings_subquery = UserEntryReading.where(:user_id => self.user_id).to_sql
+    self.entries.includes(:subscription).joins("LEFT OUTER JOIN (#{user_readings_subquery}) AS user_readings ON entries.id = user_readings.entry_id")
+    .where("user_readings.entry_id IS NULL")
   end
 
 end
