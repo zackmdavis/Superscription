@@ -3,12 +3,12 @@
   <input type="hidden"
   			 name="authenticity_token"
   			 value="<%= form_authenticity_token %>">
-  <label for="new_subscription_url"><strong>URL<strong></label><br>
+  <label for="new_subscription_url"><strong>URL</strong></label><br>
   <p>
     <input type="text" name="subscription[url]" value="<%= @subscription.url %>" id="new_subscription_url">
   </p>
 
- <label for="subscription_category"><strong>Category<strong></label><br>
+ <label for="subscription_category"><strong>Category</strong></label><br>
   <p>
     <select name="subscription[user_subscriptions_attributes][][category_id]" id="subscription_category">
       <% @categories.each do |category| %>

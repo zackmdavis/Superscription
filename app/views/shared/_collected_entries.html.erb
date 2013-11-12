@@ -1,11 +1,19 @@
 <div class="row">
 <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
+  <br>
+  <% if entries.empty? %>
+  <div class="well">
+    <p class="text-center"><strong><em>No unread entries at this time</em></strong></p>
+  </div>
+  <% end %>
   <% entries.each do |entry| %>
     <div class="well" id="entry-well-<%= entry.id %>">
     <h4><%= link_to entry.title, entry.url %></h4>
-    <p><%= entry.author.html_safe unless entry.author.nil? %></p>
-    <p><%= entry.datetime.to_formatted_s(:superscription_custom) %></p>
-    <p>from <em><%= entry.subscription.title %></em></p>
+    <% unless entry.author.nil? %>
+    <p class="entry-author"><span class="glyphicon glyphicon-user"></span> <%= entry.author.html_safe %></p>
+    <% end %>
+    <p class="entry-timestamp"><span class="glyphicon glyphicon-time"></span> <%= entry.datetime.to_formatted_s(:superscription_custom) %></p>
+    <p class="entry-subscription"><span class="glyphicon glyphicon-book"></span> from <em><%= entry.subscription.title %></em></p>
     <% unless entry.content.nil? %>
       <div class="entry-content" data-id="<%= entry.id %>">
         <%= entry.content.html_safe %>
@@ -15,7 +23,7 @@
         <%= entry.description.html_safe %>
       </div>
     <% end %>
-    <%= button_to "Mark as Read", api_readings_url, :data => {:id => entry.id}, :class => "mark-as-read" %>
+    <br><%= button_to "Mark as Read ✔", api_readings_url, :data => {:id => entry.id}, :class => "mark-as-read" %>
     </div>
   <% end %>
 </div>

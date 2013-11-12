@@ -12,6 +12,9 @@ $(document).ready(function(){
 
   $('.mark-as-read').click(function(event) {
     event.preventDefault();
+    // maybe this should actually become a "mark unread" button (instead of
+    // disabling), in case someone misclicks?
+    $(this).prop("disabled", true);
     var entry_id = $(this).data("id");
     var well_id = "#entry-well-" + entry_id;
     $(well_id).fadeTo(250, 0.3);

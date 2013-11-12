@@ -12,17 +12,17 @@
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav superscription-nav-button-group">
         <% if current_user %>
-          <li><%= button_to "Read!", read_url, :method => :get, :id => :read_button %>
-          <li><%= button_to "My Subscriptions", user_subscriptions_url(current_user.id), :method => :get %>
-          <li><%= button_to "Sign out", destroy_user_session_url, :method => :delete %>
+          <li><%= button_to "Read!", read_url, :method => :get, :id => :read_button %></li>
+          <li><%= button_to "My Subscriptions", user_subscriptions_url(current_user.id), :method => :get %></li>
+          <li><%= button_to "Sign out", destroy_user_session_url, :method => :delete %></li>
           <% else %>
-          <li><%= button_to "Sign up", new_user_registration_url, :method => :get %>
-          <li><%= button_to "Sign in", new_user_session_url, :method => :get  %>
-          <li><%= button_to "Sign in as Guest", guest_url, :method => :post %>
+          <li><%= button_to "Sign up", new_user_registration_url, :method => :get %></li>
+          <li><%= button_to "Sign in", new_user_session_url, :method => :get  %></li>
+          <li><%= button_to "Sign in as Guest", guest_url, :method => :post %></li>
           <% end %>
       </ul>
-      <ul class="nav navbar-nav">
-      <p style="color: #DDDDDD; margin-top: 18px; margin-left: 10px">
+      <ul class="nav navbar-nav navbar-left">
+      <p style="color: #DDDDDD; margin-top: 20px; margin-left: 10px">
             <% if current_user %>
               logged in as <strong><%= current_user.username %></strong> <a href="/users/edit"><span class="glyphicon glyphicon-edit"></span></a>
             <% else %>
@@ -31,4 +31,5 @@
       </ul>
     </div>
   </div>
+</div>
 </div>

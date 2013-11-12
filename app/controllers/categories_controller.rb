@@ -10,7 +10,7 @@ class CategoriesController < ApplicationController
     @category.user = current_user
     @entries = []
     if @category.save
-      render :show
+       redirect_to user_subscriptions_url(current_user)
     else
       flash[:alert] = @category.errors.full_messages
       render :new
