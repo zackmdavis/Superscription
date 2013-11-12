@@ -3,13 +3,13 @@ class SubscriptionsController < ApplicationController
   before_filter :authenticate_user!
 
   def main
-    @subscriptions = current_user.subscriptions
+    @user_subscriptions = current_user.user_subscriptions
     @categories = current_user.categories
     @category_entries = ActiveSupport::OrderedHash.new
-    @categories.includes(:subscriptions).each do |category|
+    @categories.includes(:user_subscriptions).each do |category|
       @category_entries[category.name] = []
-      category.subscriptions.each do |subscription|
-        @category_entries[category.name] += subscription.entries.includes(:subscription).to_a
+      category.user_subscriptions.each do |user_subscription|
+        @category_entries[category.name] += user_subscription.unread_entries.to_a
       end
       @category_entries[category.name].sort_by! { |entry| entry.datetime }.reverse!
     end
