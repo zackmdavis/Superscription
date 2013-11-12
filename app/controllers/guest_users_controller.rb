@@ -1,7 +1,7 @@
 class GuestUsersController < ApplicationController
 
   def create
-    guest_id = Time.now.to_i.to_s[2..-3]+rand(0..99).to_s
+    guest_id = User.count + 1
     guest_user_params = {:username => "Guest#{guest_id}",
                          :email => "guest#{guest_id}@example.org",
                          :password => "password#{guest_id}",
@@ -11,11 +11,10 @@ class GuestUsersController < ApplicationController
 
     guest_category1 = Category.create(:name => "Current Events", :user_id => guest_user.id)
     guest_category2 = Category.create(:name => "Technology", :user_id => guest_user.id)
-    category1_urls = ["http://www.sfgate.com/bayarea/feed/Bay-Area-News-429.php", "http://feeds.latimes.com/latimes/news/nationworld/nation"]
-    category2_urls = ["http://feeds.wired.com/wired/index", "http://feeds.feedburner.com/TechCrunch/"]
+    category1_urls = ["http://www.sfgate.com/rss/feed/National-News-RSS-Feed-435.php", "http://feeds.contracostatimes.com/mngi/rss/CustomRssServlet/571/200819.xml"]
+    category2_urls = ["http://feeds.feedburner.com/TechCrunch/", "http://feeds.bbci.co.uk/news/technology/rss.xml"]
     categories = {guest_category1 => category1_urls, guest_category2 => category2_urls}
 
-    #debugger
     categories.each do |category, urls|
       urls.each do |url|
         subscription = Subscription.find_by_url(url)
