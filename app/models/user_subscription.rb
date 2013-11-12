@@ -1,6 +1,8 @@
 class UserSubscription < ActiveRecord::Base
   attr_accessible :category_id, :subscription_id, :user_id
 
+  validates :subscription_id, :user_id, :presence => true
+
   belongs_to :category
   belongs_to :subscription, :inverse_of => :user_subscriptions
   has_many :entries, :through => :subscription

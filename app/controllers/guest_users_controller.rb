@@ -8,11 +8,25 @@ class GuestUsersController < ApplicationController
                          :password_confirmation => "password#{guest_id}",
                          :is_guest => true}
     guest_user = User.create!(guest_user_params)
+
     guest_category1 = Category.create(:name => "Current Events", :user_id => guest_user.id)
     guest_category2 = Category.create(:name => "Technology", :user_id => guest_user.id)
-    # TODO --- pick specific guest subscriptions (not database ids 1 and 2!)
-    UserSubscription.create(:category_id => guest_category1.id, :user_id => guest_user.id, :subscription_id => 1)
-    UserSubscription.create(:category_id => guest_category2.id, :user_id => guest_user.id, :subscription_id => 2)
+    category1_urls = ["http://www.sfgate.com/bayarea/feed/Bay-Area-News-429.php", "http://feeds.latimes.com/latimes/news/nationworld/nation"]
+    category2_urls = ["http://feeds.wired.com/wired/index", "http://feeds.feedburner.com/TechCrunch/"]
+    categories = {guest_category1 => category1_urls, guest_category2 => category2_urls}
+
+    #debugger
+    categories.each do |category, urls|
+      urls.each do |url|
+        subscription = Subscription.find_by_url(url)
+        if subscription.nil?
+          subscription = Subscription.create(:url => url)
+          subscription.load_everything!
+        end
+        UserSubscription.create(:category_id => category.id, :user_id => guest_user.id, :subscription_id => subscription.id)
+      end
+    end
+
     sign_in_and_redirect guest_user
   end
 
