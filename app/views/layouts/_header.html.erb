@@ -24,7 +24,7 @@
       <ul class="nav navbar-nav navbar-left">
       <p style="color: #DDDDDD; margin-top: 20px; margin-left: 10px">
             <% if current_user %>
-              logged in as <strong><%= current_user.username %></strong> <a href="/users/edit"><span class="glyphicon glyphicon-edit"></span></a>
+              <strong><%= current_user.username %></strong> <a href="/users/edit"><span class="glyphicon glyphicon-edit"></span></a>
             <% else %>
               not logged in
             <% end %>
