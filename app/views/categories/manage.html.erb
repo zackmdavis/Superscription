@@ -1,3 +1,4 @@
+<p><%= link_to "&larr; back to My Subscriptions".html_safe, user_subscriptions_url(current_user) %></p>
 <p>Drag and drop subscriptions to assign them to a category!</p>
 <% @categories.each do |category| %>
 <div class="category-area" data-id="<%= category.id %>" id="category-area-<%= category.id %>">

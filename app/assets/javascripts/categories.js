@@ -5,7 +5,10 @@ $(document).ready(function() {
       $.ajax({
         url: "/api/user_subscriptions/" + $(ui.draggable).data("id") + "/change_category",
         type: "POST",
-        data: {category_id: $(this).data("id")}
+        data: {category_id: $(this).data("id")},
+        success: function(response) {
+          $.growl({ title: "Category Changed", message: response[0] });
+        }
       });
     }
   });
