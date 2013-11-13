@@ -18,7 +18,9 @@ Superscription::Application.routes.draw do
 
   namespace "api", :defaults => { :format => :json } do
     resources :user_subscriptions, :only => [:destroy]
+    post "/user_subscriptions/:id/change_category", :to => "user_subscriptions#change_category"
     resources :readings, :only => [:create]
+    resources :categories, :only => [:destroy]
   end
 
 end

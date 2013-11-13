@@ -1,20 +1,9 @@
-<script>
-$(document).ready(function() {
-  $('.subscription-draggable').draggable();
-  $('.category-area').droppable({
-    drop: function(event, ui) {
-      alert($(this).attr("id"));
-    }
-  });
-});
-
-</script>
-
+<p>Drag and drop subscriptions to assign them to a category!</p>
 <% @categories.each do |category| %>
-<div class="category-area" id="category-area-<%= category.id %>">
-  <p><strong><%= category.name %></strong></p>
+<div class="category-area" data-id="<%= category.id %>" id="category-area-<%= category.id %>">
+  <p><strong><%= category.name %></strong> &mdash; <a href="#" class="delete-category" data-id="<%= category.id%>"><span class="glyphicon glyphicon-trash"></span></a></p>
   <% category.user_subscriptions.each do |user_subscription| %>
-    <span class="subscription-draggable">
+    <span class="subscription-draggable" data-id="<%= user_subscription.id %>" id="subscription-draggable-<%= user_subscription.id %>">
       <%= user_subscription.title %>
     </span>
   <% end %>
