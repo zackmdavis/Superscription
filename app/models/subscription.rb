@@ -8,7 +8,7 @@ class Subscription < ActiveRecord::Base
 
   has_many :user_subscriptions, :inverse_of => :subscription
   has_many :subscribers, :through => :user_subscriptions, :source => :user
-  has_many :entries
+  has_many :entries, :dependent => :destroy
 
   accepts_nested_attributes_for :user_subscriptions
 

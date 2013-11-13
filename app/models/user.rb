@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   attr_accessible :username, :email, :password, :password_confirmation, :remember_me, :is_guest
 
   has_many :categories
-  has_many :user_subscriptions
+  has_many :user_subscriptions, :dependent => :destroy
   has_many :subscriptions, :through => :user_subscriptions
   has_many :user_entry_readings
 
