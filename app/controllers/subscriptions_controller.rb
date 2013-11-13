@@ -17,7 +17,7 @@ class SubscriptionsController < ApplicationController
   end
 
   def index
-    @user_subscriptions = UserSubscription.includes(:subscription).includes(:category).includes(:user).find_all_by_user_id(current_user.id)
+    @user_subscriptions = UserSubscription.includes(:subscription).includes(:category).find_all_by_user_id(current_user.id)
     @user_subscriptions.sort_by! { |user_subscription| user_subscription.title }
     render :index
   end

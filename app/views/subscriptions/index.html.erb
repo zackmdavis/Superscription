@@ -3,7 +3,7 @@
 <% @user_subscriptions.each do |user_subscription|  %>
   <li id="user-subscription-item-<%= user_subscription.id%>"><em><%= link_to user_subscription.title, subscription_url(user_subscription.subscription.id) %></em>
     <% if user_subscription.category %>
-     in category <%= link_to user_subscription.category.name, user_category_url(user_subscription.user.id, user_subscription.category.id) %>
+     in category <%= link_to user_subscription.category.name, "/read#_#{user_subscription.category.name.downcase.gsub(" ", "_")}" %>
     <% end %>
     &mdash; <a href="#" class="delete-user-subscription" data-id="<%= user_subscription.id%>"><span class="glyphicon glyphicon-trash"></span></a>
   </li>
