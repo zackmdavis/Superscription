@@ -13,7 +13,9 @@
     <p class="entry-author"><span class="glyphicon glyphicon-user"></span> <%= entry.author.html_safe %></p>
     <% end %>
     <p class="entry-timestamp"><span class="glyphicon glyphicon-time"></span> <%= entry.datetime.to_formatted_s(:superscription_custom) %></p>
-    <p class="entry-subscription"><span class="glyphicon glyphicon-book"></span> from <em><%= entry.subscription.title %></em></p>
+    <% if show_subscription %>
+      <p class="entry-subscription"><span class="glyphicon glyphicon-book"></span> from <em><%= entry.subscription.title %></em></p>
+    <% end %>
     <% unless entry.content.nil? %>
       <div class="entry-content" data-id="<%= entry.id %>">
         <%= entry.content.html_safe %>
@@ -23,7 +25,9 @@
         <%= entry.description.html_safe %>
       </div>
     <% end %>
-    <br><%= button_to "Mark as Read ✔", api_readings_url, :data => {:id => entry.id}, :class => "mark-as-read" %>
+    <% if read_marking %>
+        <br><%= button_to "Mark as Read ✔", api_readings_url, :data => {:id => entry.id}, :class => "mark-as-read" %>
+    <% end %>
     </div>
   <% end %>
 </div>

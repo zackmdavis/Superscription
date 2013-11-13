@@ -9,7 +9,7 @@
 <div class="tab-content">
   <% @category_entries.each_with_index do |(name, entries), index| %>
     <div class="tab-pane" id="<%= name.downcase.gsub(" ", "_") %>">
-      <%= render "shared/collected_entries", :entries => entries %>
+      <%= render "collected_entries", :entries => entries, :read_marking => true, :show_subscription => true %>
     </div>
   <% end %>
 </div>
