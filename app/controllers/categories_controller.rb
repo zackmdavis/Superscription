@@ -1,5 +1,7 @@
 class CategoriesController < ApplicationController
 
+  before_filter :authenticate_user!
+
   def new
     @category = Category.new
     render :new
@@ -15,6 +17,11 @@ class CategoriesController < ApplicationController
       flash[:alert] = @category.errors.full_messages
       render :new
     end
+  end
+
+  def manage
+    @categories = current_user.categories
+    render :manage
   end
 
 end

@@ -5,15 +5,16 @@ Superscription::Application.routes.draw do
   get :read, :to => "subscriptions#main"
 
   devise_for :users
+  post :guest, :to => "guest_users#create"
 
   resources :users, :only => [] do
     resources :subscriptions, :only => [:index, :new]
     resources :categories, :only => [:new, :create]
   end
 
-  post :guest, :to => "guest_users#create"
-
   resources :subscriptions, :only => [:create, :show]
+
+  get :categories, :to => "categories#manage"
 
   namespace "api", :defaults => { :format => :json } do
     resources :user_subscriptions, :only => [:destroy]

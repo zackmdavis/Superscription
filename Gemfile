@@ -9,6 +9,7 @@ gem 'bcrypt-ruby', '~> 3.0.0'
 gem 'nokogiri'
 
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 gem 'bootstrap-sass'
 
 group :development do
