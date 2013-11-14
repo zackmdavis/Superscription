@@ -1,7 +1,7 @@
 class GuestUsersController < ApplicationController
 
   def create
-    guest_id = User.count + 1
+    guest_id = User.maximum(:id) + 1
     guest_user_params = {:username => "Guest#{guest_id}",
                          :email => "guest#{guest_id}@example.org",
                          :password => "password#{guest_id}",
