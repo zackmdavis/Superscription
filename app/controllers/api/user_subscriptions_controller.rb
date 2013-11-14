@@ -6,6 +6,7 @@ class Api::UserSubscriptionsController < ApplicationController
     subscription_title = @user_subscription.title
     new_category_name = Category.find(params[:category_id]).name
     if @user_subscription.save
+      # really ought to be sending an object
       render :json => ["Moved #{subscription_title} to #{new_category_name}"]
     else
       render :json => ["could not change category"]
